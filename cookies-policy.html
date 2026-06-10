@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookies Policy – Click A Cookie</title>
+  <meta name="description" content="Cookies Policy for Click A Cookie – Learn how we use localStorage and what data we store to save your game progress." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://clickacookie.github.io/cookies-policy" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:       #FFF8F0;
+      --cream-alt:   #FFF1E6;
+      --warm-white:  #FFFDF9;
+      --brown-dark:  #3D1C02;
+      --brown-mid:   #7B3F00;
+      --brown-light: #C47B2B;
+      --coral:       #FF6B6B;
+      --coral-light: #FF8E8E;
+      --gold:        #FFD700;
+      --gold-light:  #FFE95C;
+      --gold-dark:   #C89B0A;
+      --green:       #4CAF50;
+      --shadow:      rgba(61,28,2,0.12);
+      --shadow-lg:   rgba(61,28,2,0.22);
+      --radius-md:   16px;
+      --radius-lg:   24px;
+      --font-display: 'Fredoka One', cursive;
+      --font-body:    'Nunito', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--brown-dark);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: var(--coral); transition: color 0.2s; }
+    a:hover { color: var(--gold-dark); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--cream);
+      border-bottom: 3px solid var(--gold);
+    }
+    .header-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--brown-dark);
+    }
+    .logo-icon { font-size: 1.8rem; animation: spin-slow 8s linear infinite; display: inline-block; }
+    .logo-accent { color: var(--coral); }
+    .back-link {
+      background: var(--cream-alt);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-weight: 700;
+      color: var(--brown-mid);
+      transition: all 0.2s;
+    }
+    .back-link:hover {
+      background: var(--coral);
+      color: white;
+    }
+
+    .cookies-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+    .cookies-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .cookies-badge {
+      display: inline-block;
+      background: var(--coral);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 5px 16px;
+      border-radius: 30px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--brown-dark);
+      margin-bottom: 16px;
+    }
+
+    .cookies-card {
+      background: var(--warm-white);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: 0 4px 20px var(--shadow);
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--brown-dark);
+      margin: 28px 0 12px 0;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--gold-light);
+    }
+    h2:first-of-type { margin-top: 0; }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--brown-mid);
+      margin: 20px 0 8px 0;
+    }
+    p {
+      margin-bottom: 16px;
+      color: var(--brown-mid);
+    }
+    ul, ol {
+      margin: 12px 0 20px 30px;
+      color: var(--brown-mid);
+    }
+    li {
+      margin: 8px 0;
+    }
+    .info-box {
+      background: linear-gradient(135deg, #FFF9E6, #FFF1E6);
+      border-left: 4px solid var(--gold);
+      padding: 20px 24px;
+      border-radius: var(--radius-md);
+      margin: 24px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--gold-light);
+    }
+    th {
+      background: var(--cream-alt);
+      font-weight: 800;
+      color: var(--brown-dark);
+    }
+    .control-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    .control-btn {
+      background: var(--cream-alt);
+      border: 2px solid var(--gold-light);
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: 700;
+      color: var(--brown-mid);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .control-btn:hover {
+      background: var(--coral);
+      border-color: var(--coral);
+      color: white;
+    }
+
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }    
+
+    @media (max-width: 768px) {
+      .cookies-card { padding: 24px; }
+      .cookies-container { padding: 32px 16px 48px; }
+      th, td { padding: 8px; font-size: 0.85rem; }
+    }
+  </style>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main class="cookies-container">
+  <div class="cookies-header">
+    <span class="cookies-badge">🍪 COOKIE POLICY</span>
+    <h1>Cookies & Local Storage Policy</h1>
+    <p>Understanding how Click A Cookie stores your game data — because transparency is sweet.</p>
+  </div>
+
+  <div class="cookies-card">
+    <div class="info-box">
+      <strong>🍪 Wait, actual cookies or computer cookies?</strong><br>
+      Good question! In this policy, we're talking about <strong>browser storage</strong> (localStorage) — not the delicious baked goods you click in the game. But we love both kinds! 🍪
+    </div>
+
+    <h2>1. Do We Use Traditional Cookies?</h2>
+    <p><strong>No.</strong> Click A Cookie does <strong>not</strong> use traditional HTTP cookies for tracking, analytics, or advertising. We believe in minimal data storage and maximum privacy.</p>
+    <p>Instead, we use <strong>localStorage</strong> — a modern web storage technology that saves data directly in your browser. This is what allows your game progress to be saved between sessions.</p>
+
+    <h2>2. What Is localStorage?</h2>
+    <p>localStorage is a feature built into every modern web browser (Chrome, Firefox, Safari, Edge, etc.). It allows websites to store small amounts of data on your device. Unlike cookies, localStorage data is <strong>not sent to our servers</strong> — it stays entirely on your computer or phone.</p>
+
+    <h2>3. What Data Does Click A Cookie Store?</h2>
+    <p>When you play Click A Cookie, we store the following information in your browser's localStorage:</p>
+
+    <table>
+      <thead>
+        <tr><th>Data Type</th><th>What It Stores</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cookie Count</td><td>Your current number of cookies</td><td>Save your progress</td></tr>
+        <tr><td>Buildings Owned</td><td>How many of each building you have purchased</td><td>Save your automation setup</td></tr>
+        <tr><td>Upgrades Purchased</td><td>Which upgrades you have unlocked</td><td>Save your click/building multipliers</td></tr>
+        <tr><td>Achievements Earned</td><td>Which achievements you've unlocked</td><td>Track your milestones</td></tr>
+        <tr><td>Statistics</td><td>Total cookies baked all time, click count, etc.</td><td>Display your stats</td></tr>
+        <tr><td>Game Version</td><td>Current game version number</td><td>Ensure compatibility</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Important:</strong> We do <strong>not</strong> store your name, email address, IP address, or any personally identifiable information in localStorage.</p>
+
+    <h2>4. How Long Is Data Stored?</h2>
+    <p>Your game data remains in localStorage <strong>indefinitely</strong> until you or your browser removes it. The data persists even after you close your browser or restart your computer.</p>
+    <p>Data is only removed when:</p>
+    <ul>
+      <li>You click the "Reset Game" button inside Click A Cookie</li>
+      <li>You manually clear your browser's localStorage (via browser settings)</li>
+      <li>You use private/incognito mode (data is cleared when you close the window)</li>
+      <li>Your browser automatically clears storage due to low space (rare)</li>
+    </ul>
+
+    <h2>5. Can I Control or Delete My Data?</h2>
+    <p><strong>Absolutely!</strong> You have complete control over your game data. Here's how:</p>
+
+    <div class="control-buttons">
+      <button class="control-btn" onclick="alert('In the game, click the reset button (↺) in the top-right of the Bakery Shop panel.')">🎮 Reset via Game</button>
+      <button class="control-btn" onclick="showClearInstructions()">🗑️ Clear via Browser Settings</button>
+    </div>
+
+    <p><strong>Browser-specific instructions:</strong></p>
+    <ul>
+      <li><strong>Chrome/Edge:</strong> Settings → Privacy & Security → Clear browsing data → Advanced → Select "Local storage" → Clear data</li>
+      <li><strong>Firefox:</strong> Settings → Privacy & Security → Cookies & Site Data → Clear Data → Uncheck "Cookies" but check "Site Data" → Clear</li>
+      <li><strong>Safari:</strong> Develop → Empty Caches (or Preferences → Privacy → Manage Website Data → Remove)</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 Pro Tip:</strong> If you want to start fresh without losing your current save, you can play in an incognito/private window. Your main save will remain untouched!
+    </div>
+
+    <h2>6. Does Click A Cookie Use Third-Party Cookies?</h2>
+    <p><strong>No.</strong> We do not integrate with:</p>
+    <ul>
+      <li>❌ Advertising networks</li>
+      <li>❌ Social media pixels (Facebook, Twitter, etc.)</li>
+      <li>❌ Google Analytics (standard version)</li>
+      <li>❌ Any third-party tracking cookies</li>
+    </ul>
+    <p>Our only external connections are to:</p>
+    <ul>
+      <li>✅ Google Fonts (for the Fredoka One and Nunito fonts)</li>
+      <li>✅ GitHub Pages (where the game is hosted)</li>
+    </ul>
+    <p>These services may set their own cookies. Please refer to <a href="https://policies.google.com/technologies/cookies" target="_blank">Google's Cookie Policy</a> and <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank">GitHub's Privacy Statement</a> for details.</p>
+
+    <h2>7. What About "Cookie" Clicking in the Game?</h2>
+    <p>Just for fun — every time you click the giant cookie in our game, it's a literal cookie that you're clicking! 🍪 These clicks <strong>do not</strong> create browser cookies. They create virtual cookies that exist only within the game. Your browser doesn't store anything about each individual click.</p>
+
+    <h2>8. Offline Production & LocalStorage</h2>
+    <p>Offline production works by saving a timestamp when you last played. When you return, the game calculates how many cookies your buildings produced based on the time difference. This calculation uses data from localStorage. If localStorage is cleared, your offline progress cannot be calculated.</p>
+
+    <h2>9. Consent</h2>
+    <p>By playing Click A Cookie, you consent to the use of localStorage as described in this policy. You are not required to accept traditional tracking cookies because we don't use them.</p>
+    <p>If you prefer not to have any data stored, you can play in private/incognito mode. Your progress won't be saved between sessions, but the game will still work perfectly.</p>
+
+    <h2>10. Changes to This Policy</h2>
+    <p>We may update this Cookies Policy occasionally. The "Last Updated" date at the top indicates when changes were made. Continued use of Click A Cookie after changes constitutes acceptance.</p>
+
+    <h2>11. Contact Us About Cookies</h2>
+    <p>If you have questions about how we use localStorage or browser storage, please contact Roberto:</p>
+    <p><strong>📧 Email:</strong> <a href="mailto:qgqgqhqyus@gmail.com">qgqgqhqyus@gmail.com</a></p>
+
+    <hr />
+
+    <p style="font-size: 0.85rem; text-align: center; color: var(--brown-light);">
+      At Click A Cookie, we believe the only cookies that should track you are the ones you click on in the game. 🍪
+    </p>
+  </div>
+</main>
+
+  <div id="footer-placeholder"></div>
+
+<script src="js/header.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/game.js"></script>
+
+<script>
+  function showClearInstructions() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    let instructions = "";
+    
+    if (userAgent.includes('chrome')) {
+      instructions = "Chrome/Edge: Go to Settings → Privacy & Security → Clear browsing data → Advanced → Select 'Local storage' → Clear data";
+    } else if (userAgent.includes('firefox')) {
+      instructions = "Firefox: Go to Settings → Privacy & Security → Cookies & Site Data → Clear Data → Check 'Site Data' → Clear";
+    } else if (userAgent.includes('safari')) {
+      instructions = "Safari: Go to Develop → Empty Caches (or Preferences → Privacy → Manage Website Data → Remove)";
+    } else {
+      instructions = "Check your browser's settings for 'Clear browsing data' or 'Local storage'. Look for options to clear site data or local storage.";
+    }
+    
+    alert("🗑️ To clear your game data:\n\n" + instructions + "\n\n⚠️ Warning: This will delete ALL your cookie progress!");
+  }
+</script>
+</body>
+</html>
