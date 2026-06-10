@@ -26,7 +26,7 @@
         </div>
         <div class="footer-col">
           <h4>Info</h4>
-          <a href="/about-section">About Us</a>
+          <a href="/about">About Us</a>
           <a href="/contact">Contact</a>
           <a href="/privacy">Privacy Policy</a>
           <a href="/terms">Terms of Use</a>
