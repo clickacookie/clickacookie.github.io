@@ -12,22 +12,25 @@
       <div class="footer-links">
         <div class="footer-col">
           <h4>Game</h4>
-          <a href="#game-section">Play Now</a>
-          <a href="#how-to-play">How to Play</a>
-          <a href="#tips-section">Strategy Tips</a>
-          <a href="#golden-section">Golden Cookies</a>
+          <a href="/#game-section">Play Now</a>
+          <a href="/#how-to-play">How to Play</a>
+          <a href="/#tips-section">Strategy Tips</a>
+          <a href="/#golden-section">Golden Cookies</a>
         </div>
         <div class="footer-col">
           <h4>Content</h4>
-          <a href="#buildings-section">Buildings Guide</a>
-          <a href="#upgrades-section">Upgrades Guide</a>
-          <a href="#achievements-section">Achievements</a>
-          <a href="#faq-section">FAQ</a>
+          <a href="/#buildings-section">Buildings Guide</a>
+          <a href="/#upgrades-section">Upgrades Guide</a>
+          <a href="/#achievements-section">Achievements</a>
+          <a href="/#faq-section">FAQ</a>
         </div>
         <div class="footer-col">
-          <h4>About</h4>
-          <a href="#about-section">About Us</a>
-          <a href="https://clickacookie.github.io/" rel="canonical">Homepage</a>
+          <h4>Info</h4>
+          <a href="/about-section">About Us</a>
+          <a href="/contact">Contact</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Use</a>
+          <a href="/cookies-policy">Cookies Policy</a>
         </div>
       </div>
     </div>
