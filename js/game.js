@@ -1,4 +1,5 @@
 // game.js — Complete Cookie Clicker Game Logic
+// Optimized version with reduced UI flickering
 // ============================================================
 
 (function() {
@@ -15,6 +16,12 @@
     let productionInterval = null;
     let goldenCookieTimeout = null;
     let goldenCookieVisible = false;
+
+    // Cache for achievements strip to prevent unnecessary re-renders
+    let lastAchievementsHash = '';
+    let updateUIPending = false;
+    let lastUIUpdateTime = 0;
+    const UI_UPDATE_INTERVAL = 100; // Update UI at most every 100ms
 
     // Buildings data
     const buildings = [
@@ -115,7 +122,40 @@
         }, 3000);
     }
 
+    // Optimized UI update with throttling and pending flag
+    function updateUINumbersOnly() {
+        // Quick number updates without full re-render
+        if (cookieCountEl) cookieCountEl.textContent = formatNumber(Math.floor(cookies));
+        if (cpsDisplayEl) cpsDisplayEl.textContent = `${formatNumber(getCurrentCPS())} per second`;
+        if (clickPowerDisplay) {
+            let power = clickPower * (frenzyMultiplier > 1 ? frenzyMultiplier : 1);
+            clickPowerDisplay.textContent = `+${formatNumber(power)} per click`;
+        }
+        if (totalBakedDisplay) totalBakedDisplay.textContent = formatNumber(totalCookiesBaked);
+    }
+
     function updateUI() {
+        if (updateUIPending) return;
+        updateUIPending = true;
+        
+        // Use requestAnimationFrame for smooth updates
+        requestAnimationFrame(() => {
+            updateUINumbersOnly();
+            
+            const purchasedUpgrades = upgrades.filter(u => u.purchased).length;
+            if (upgradeCountEl) upgradeCountEl.textContent = purchasedUpgrades;
+            
+            renderBuildings();
+            renderUpgrades();
+            renderAchievementsStrip(); // This now checks for changes before re-rendering
+            checkAchievements();
+            
+            updateUIPending = false;
+        });
+    }
+
+    // Force a full UI update (used after purchases or major changes)
+    function forceUIUpdate() {
         if (cookieCountEl) cookieCountEl.textContent = formatNumber(Math.floor(cookies));
         if (cpsDisplayEl) cpsDisplayEl.textContent = `${formatNumber(getCurrentCPS())} per second`;
         if (clickPowerDisplay) {
@@ -130,7 +170,6 @@
         renderBuildings();
         renderUpgrades();
         renderAchievementsStrip();
-        checkAchievements();
     }
 
     function getBuildingCost(building) {
@@ -158,7 +197,7 @@
             cookies -= cost;
             totalCookiesBaked += cost;
             building.count++;
-            updateUI();
+            forceUIUpdate();
             showToast(`Bought a ${building.name}! +${building.baseCps} cookies/sec`);
             return true;
         } else {
@@ -191,7 +230,7 @@
                 globalMultiplier += upgrade.value;
             }
             
-            updateUI();
+            forceUIUpdate();
             showToast(`Purchased: ${upgrade.name}!`);
             return true;
         } else {
@@ -208,7 +247,7 @@
         totalCookiesBaked += clickAmount;
         totalClicks++;
         
-        updateUI();
+        updateUINumbersOnly();
         createClickParticle(clickAmount);
         checkAchievements();
     }
@@ -282,13 +321,13 @@
             cookies += bonus;
             totalCookiesBaked += bonus;
             showToast(`Lucky! +${formatNumber(bonus)} cookies! 🍀`, 2000);
-            updateUI();
+            updateUINumbersOnly();
         } else if (effect === 'storm') {
             const stormCookies = Math.floor(getCurrentCPS() * 30);
             cookies += stormCookies;
             totalCookiesBaked += stormCookies;
             showToast(`Cookie Storm! +${formatNumber(stormCookies)} cookies! 🌪️`, 2000);
-            updateUI();
+            updateUINumbersOnly();
         }
         
         checkAchievements();
@@ -303,9 +342,11 @@
         }, 15000);
     }
 
-    // Production loop
+    // Optimized production loop with throttled UI updates
     function startProductionLoop() {
         let lastUpdate = Date.now();
+        let lastUIUpdate = 0;
+        
         setInterval(() => {
             const now = Date.now();
             const delta = Math.min(1, (now - lastUpdate) / 1000);
@@ -321,8 +362,17 @@
             const gained = cps * delta;
             cookies += gained;
             totalCookiesBaked += gained;
-            updateUI();
-        }, 100);
+            
+            // Throttle UI updates - only update every UI_UPDATE_INTERVAL ms
+            if (now - lastUIUpdate >= UI_UPDATE_INTERVAL) {
+                lastUIUpdate = now;
+                updateUI();
+            } else {
+                // Still update numbers without full re-render for smooth counter
+                if (cookieCountEl) cookieCountEl.textContent = formatNumber(Math.floor(cookies));
+                if (cpsDisplayEl) cpsDisplayEl.textContent = `${formatNumber(getCurrentCPS())} per second`;
+            }
+        }, 50); // Update logic every 50ms for smooth production
     }
 
     // Offline production
@@ -338,14 +388,20 @@
                 totalCookiesBaked += offlineCookies;
                 offlineProduction = offlineCookies;
                 showToast(`You earned ${formatNumber(offlineCookies)} cookies while away! 🍪`, 4000);
-                updateUI();
+                forceUIUpdate();
             }
         }
         localStorage.setItem('lastSaveTime', Date.now().toString());
     }
 
     // Achievement checking
+    let lastAchievementCheck = 0;
     function checkAchievements() {
+        const now = Date.now();
+        // Throttle achievement checking to once per second
+        if (now - lastAchievementCheck < 1000) return;
+        lastAchievementCheck = now;
+        
         let anyUnlocked = false;
         
         for (const ach of achievements) {
@@ -388,7 +444,8 @@
         
         if (anyUnlocked) {
             renderAchievementsStrip();
-            updateUI();
+            renderAchievementsPreview();
+            forceUIUpdate();
         }
     }
 
@@ -468,23 +525,38 @@
         }
     }
     
+    // Optimized renderAchievementsStrip with caching to prevent blinking
     function renderAchievementsStrip() {
         if (!achievementsStrip) return;
-        achievementsStrip.innerHTML = '';
         
         const unlocked = achievements.filter(a => a.unlocked);
+        
+        // Create a hash of current unlocked achievements to detect changes
+        const currentHash = unlocked.map(a => a.id).join(',');
+        
+        // Only re-render if achievements actually changed
+        if (currentHash === lastAchievementsHash && achievementsStrip.innerHTML !== '') {
+            return;
+        }
+        lastAchievementsHash = currentHash;
+        
         if (unlocked.length === 0) {
             achievementsStrip.innerHTML = '<div class="ach-empty">Keep baking to earn achievements!</div>';
             return;
         }
         
+        // Use document fragment for better performance
+        const fragment = document.createDocumentFragment();
         for (const ach of unlocked.slice(-8)) {
             const badge = document.createElement('div');
             badge.className = 'ach-badge';
             badge.textContent = ach.icon;
             badge.title = `${ach.name}: ${ach.desc}`;
-            achievementsStrip.appendChild(badge);
+            fragment.appendChild(badge);
         }
+        
+        achievementsStrip.innerHTML = '';
+        achievementsStrip.appendChild(fragment);
     }
     
     function renderAchievementsPreview() {
@@ -571,8 +643,12 @@
                 }
             }
             
+            // Update achievements hash after loading
+            const unlocked = achievements.filter(a => a.unlocked);
+            lastAchievementsHash = unlocked.map(a => a.id).join(',');
+            
             calculateOfflineProduction();
-            updateUI();
+            forceUIUpdate();
             renderAchievementsPreview();
             showToast('Game loaded! Welcome back! 🍪', 2000);
         } catch (e) {
@@ -597,7 +673,10 @@
             for (const upgrade of upgrades) upgrade.purchased = false;
             for (const ach of achievements) ach.unlocked = false;
             
-            updateUI();
+            // Reset achievements hash
+            lastAchievementsHash = '';
+            
+            forceUIUpdate();
             renderAchievementsPreview();
             saveGame();
             showToast('Game reset! Start fresh! 🍪', 2000);
@@ -653,7 +732,7 @@
         startProductionLoop();
         startGoldenCookieTimer();
         renderAchievementsPreview();
-        updateUI();
+        forceUIUpdate();
         
         // Scrolled header effect
         const header = document.querySelector('.site-header');
