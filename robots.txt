@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://cookieclickerz.github.io/sitemap.xml
