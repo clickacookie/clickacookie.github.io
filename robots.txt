@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://cookieclickerz.github.io/sitemap.xml
+Sitemap: https://clickacookie.github.io/sitemap.xml
